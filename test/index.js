@@ -60,4 +60,42 @@ describe('Portside', function() {
       });
     }, done)
   });
+
+  it('should be able to allocate and release ports', function(done) {
+    var targetPort = 3000;
+
+    async.series([
+      function(next) {
+        allocator.findAvailablePort(function(err, port) {
+          should.not.exist(err);
+          port.should.equal(targetPort);
+          next();
+        });
+      }, 
+      function(next) {
+        allocator.release(targetPort);
+        next();
+      }, 
+      function(next) {
+        allocator.findAvailablePort(function(err, port) {
+          should.not.exist(err);
+          port.should.equal(targetPort);
+          next();
+        });
+      }, 
+    ], done);
+  });
+
+  it('should sync port allocations between portside instances', function(done) {
+    portside(function(err, allocator2) {
+      allocator2.on('change.allocatedPorts', function() {
+        done();
+      });
+
+      allocator.findAvailablePort(function(err, port) {
+        should.not.exist(err);
+        port.should.equal(3000);
+      });
+    });
+  });
 }); 
