@@ -79,7 +79,9 @@ var Portside = function(options) {
       // Set some defaults
       _.defaults(self.config, { allocatedPorts: [], services: {}});
 
-      self.emit('connect');
+      self.config.use('default', function(err) {
+        self.emit('connect');
+      })
     });
 
   })();
@@ -222,6 +224,4 @@ module.exports = function(options, cb) {
   porter.on('connect', function() {
     cb(null, porter);
   });
-
-
 }
