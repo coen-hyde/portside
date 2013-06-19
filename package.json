@@ -21,7 +21,7 @@
     "url": "https://github.com/coen-hyde/portside/issues"
   },
   "dependencies": {
-    "sharedconfig": "~0.1.6",
+    "sharedconfig": "https://github.com/coen-hyde/sharedconfig/tarball/no-errors",
     "lodash": "~1.3.1",
     "nano": "~3.4.0",
     "async": "~0.2.9"
